@@ -1,6 +1,6 @@
 /* Garde l'outil utilisable sans connexion. Changer VERSION à chaque mise en ligne, comme le ?v= de index.html. */
-const VERSION = "20261015d";
-const FICHIERS = ["./", "index.html", "style.css?v=20261015d", "app.js?v=20261015d", "donnees.js?v=20261015d", "manifest.json", "icone.svg"];
+const VERSION = "20261015e";
+const FICHIERS = ["./", "index.html", "style.css?v=20261015e", "app.js?v=20261015e", "donnees.js?v=20261015e", "manifest.json", "icone.svg"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(FICHIERS)).then(() => self.skipWaiting()));
 });

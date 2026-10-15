@@ -205,9 +205,12 @@ function chercher(q){
   const res = D.cartes.map(c => {
     const texte = norm([c.cherche, c.cmd, c.sert, c.dit, c.en].join(" "));
     return [c, mots.filter(w => texte.includes(w) || (w.length > 4 && texte.includes(w.slice(0, -1)))).length];
-  }).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]).map(x => x[0]);
-  if (!res.length && q && !E.questions.includes(q)) { E.questions.unshift(q); sauver(); }
-  monde(mondeCourant, res.slice(0, 12), `« ${q} »`);
+  }).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]);
+  /* On ne garde que les cartes qui répondent le mieux, pour ne pas noyer la bonne */
+  const meilleur = res.length ? res[0][1] : 0;
+  const garde = res.filter(x => x[1] === meilleur).map(x => x[0]);
+  if (!garde.length && q && !E.questions.includes(q)) { E.questions.unshift(q); sauver(); }
+  monde(mondeCourant, garde.slice(0, 12), `« ${q} »`);
 }
 
 /* ---------- Carte d'une commande ---------- */
