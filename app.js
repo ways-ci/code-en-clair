@@ -8,7 +8,10 @@ const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "
 const ic = (id, cls = "") => `<svg class="${cls}"><use href="#i-${id}"/></svg>`;
 const CARTE = Object.fromEntries(D.cartes.map(c => [c.id, c]));
 const MONDE = Object.fromEntries(D.mondes.map(m => [m.id, m]));
-const COUL = {terminal:"green", git:"orange", github:"violet", vscode:"blue"};
+const COUL = {terminal:"green", git:"orange", github:"violet", vscode:"blue", web:"orange", python:"blue", sql:"violet", ia:"green", azure:"blue"};
+/* Les mondes où l'on écrit du code dans un fichier, et non une commande dans le terminal */
+const MONDES_CODE = ["web","python","sql","ia"];
+const estCode = c => MONDES_CODE.includes(c.monde);
 const NIVEAUX = ["Débutant","Apprenti","Bricoleur","Artisan","Codeur","Bâtisseur","Développeur"];
 const PAR_NIVEAU = 200;
 
@@ -218,16 +221,16 @@ function carte(id){
   const c = CARTE[id], col = COUL[c.monde], e = etatCarte(id);
   if (!e.vue) { e.vue = true; gagner(1); }
   const t = [];
-  t.push(`<div class="tile span2"><span class="label">${ic("bulb")}À quoi ça sert</span><p class="say-big">${esc(c.sert)}</p>${c.quand ? `<p class="quand">${esc(c.quand)}</p>` : ""}
+  t.push(`<div class="tile span2" ${c.boutons || c.touches ? "" : `style="grid-column:1/-1"`}><span class="label">${ic("bulb")}À quoi ça sert</span><p class="say-big">${esc(c.sert)}</p>${c.quand ? `<p class="quand">${esc(c.quand)}</p>` : ""}
     ${c.flux ? `<div class="flow">${c.flux.map((f, i) => `${i ? ic("arrow") : ""}<button class="tag ${f === id ? "here" : ""}" data-fiche="${f}" style="border:0">${esc(CARTE[f].cmd)}</button>`).join("")}</div>` : ""}</div>`);
   if (c.boutons || c.touches) t.push(`<div class="tile"><span class="label">${ic("mouse")}${c.boutons ? "Avec les boutons" : "Au clavier"}</span>
     ${c.touches ? `<p>${c.touches.map(k => `<span class="kbd">${esc(k)}</span>`).join(" + ")}</p>` : ""}${c.boutons ? `<p style="font-weight:600">${esc(c.boutons)}</p>` : ""}</div>`);
   const raccourci = /^(Ctrl|Tab)/.test(c.cmd);
-  if (c.lignes) t.push(`<div class="tile span2"><span class="label">${ic(raccourci ? "mouse" : "term")}${raccourci ? "Le raccourci" : "Tape-la"}</span>
+  if (c.lignes) t.push(`<div class="tile span2"><span class="label">${ic(raccourci ? "mouse" : estCode(c) ? "code" : "term")}${raccourci ? "Le raccourci" : estCode(c) ? "Écris-le" : "Tape-la"}</span>
     <div class="term">${c.lignes.map(l => raccourci
       ? `<div class="tline"><code>${l[0].split(" + ").map(k => `<span class="kbd" style="background:transparent;color:inherit">${esc(k)}</span>`).join(" + ")}<small>${esc(l[1])}</small></code></div>`
-      : `<div class="tline"><span class="p">$</span><code>${esc(l[0])}<small>${esc(l[1])}</small></code><button class="copy" data-copy="${esc(l[0])}">Copier</button></div>`).join("")}</div></div>`);
-  if (c.reponse) t.push(`<div class="tile"><span class="label">${ic("chat")}Le terminal te répond</span>
+      : `<div class="tline">${estCode(c) ? "" : `<span class="p">$</span>`}<code>${esc(l[0])}<small>${esc(l[1])}</small></code><button class="copy" data-copy="${esc(l[0])}">Copier</button></div>`).join("")}</div></div>`);
+  if (c.reponse) t.push(`<div class="tile"><span class="label">${ic("chat")}${estCode(c) ? "Ce que tu vois" : "Le terminal te répond"}</span>
     <div class="trad">${c.reponse.map(r => `<div><code>${esc(r[0])}</code><span>${esc(r[1])}</span></div>`).join("")}</div></div>`);
   if (c.pieges) t.push(`<div class="tile span2"><span class="label">${ic("warn")}Les pièges</span>
     ${c.pieges.map(p => `<details class="trap"><summary>${ic("arrow")}<code>${esc(p[0])}</code></summary><p>${esc(p[1])}</p></details>`).join("")}</div>`);
@@ -257,7 +260,7 @@ const melanger = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { 
 function qChoix(c){
   const autres = melanger(D.cartes.filter(x => x.id !== c.id && x.monde === c.monde)).slice(0, 3);
   while (autres.length < 3) autres.push(melanger(D.cartes.filter(x => x.id !== c.id && !autres.includes(x)))[0]);
-  return {type:"choix", carte:c.id, q:`Quelle commande sert à : ${c.sert.charAt(0).toLowerCase() + c.sert.slice(1)}`, opts:melanger([c.cmd, ...autres.map(x => x.cmd)]), ok:c.cmd, why:`${c.cmd} : ${c.dit}.`};
+  return {type:"choix", carte:c.id, q:`${estCode(c) ? "Quel code" : "Quelle commande"} sert à : ${c.sert.charAt(0).toLowerCase() + c.sert.slice(1)}`, opts:melanger([c.cmd, ...autres.map(x => x.cmd)]), ok:c.cmd, why:`${c.cmd} : ${c.dit}.`};
 }
 function qMot(c){
   const w = (c.mots || [])[0]; const l = w && D.lexique.find(x => x.en === w); if (!l) return null;
@@ -295,7 +298,7 @@ function dessinerDefi(){
   const q = J.qs[J.i]; J.repondu = false;
   const zone = q.type === "choix"
     ? `<div class="choices">${q.opts.map(o => `<button class="choice" data-choix="${esc(o)}">${esc(o)}</button>`).join("")}</div>`
-    : `<div class="typebox"><pre id="tb"><span class="c"># Terminal d'entraînement : rien n'est exécuté, on vérifie.</span></pre><form id="tbf"><span class="p">$</span><input id="tbi" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="tape ta réponse, puis Entrée" aria-label="Ta réponse"></form></div>`;
+    : `<div class="typebox"><pre id="tb"><span class="c">${estCode(CARTE[q.carte]) ? "// Éditeur d'entraînement : rien n'est exécuté, on vérifie." : "# Terminal d'entraînement : rien n'est exécuté, on vérifie."}</span></pre><form id="tbf"><span class="p">${estCode(CARTE[q.carte]) ? "›" : "$"}</span><input id="tbi" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="tape ta réponse, puis Entrée" aria-label="Ta réponse"></form></div>`;
   $("#defis").innerHTML = `<div class="game"><div>
     <div class="gbar"><div class="xpbar"><i style="width:${J.i / J.qs.length * 100}%"></i></div><div class="hearts">${[1,2,3].map(i => ic("heart", i > J.coeurs ? "lost" : "")).join("")}</div></div>
     <span class="label">Défi ${J.i + 1} sur ${J.qs.length} · ${q.type === "choix" ? "choisis" : "tape"}</span>
@@ -324,7 +327,7 @@ function verifierTape(v){
   if (J.repondu) return;
   v = v.trim().replace(/\s+/g, " "); if (!v) return;
   const q = J.qs[J.i], d = q.d, tb = $("#tb"), fl = d.flags || "";
-  tb.innerHTML += `\n<span class="p">$ </span>${esc(v)}`;
+  tb.innerHTML += `\n<span class="p">${estCode(CARTE[q.carte]) ? "›" : "$"} </span>${esc(v)}`;
   if (d.ok.some(r => new RegExp(r, fl).test(v))) verdict(true, "Refais-la maintenant dans ton vrai terminal.", 15);
   else {
     const f = (d.fautes || []).find(r => new RegExp(r[0], fl).test(v));
