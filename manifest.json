@@ -1,0 +1,11 @@
+{
+  "name": "Code en clair",
+  "short_name": "Code en clair",
+  "description": "Apprendre à coder en français : la commande en anglais, tout le reste en français.",
+  "lang": "fr",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f1f4fa",
+  "theme_color": "#f1f4fa",
+  "icons": [{"src": "icone.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}]
+}

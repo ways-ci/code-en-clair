@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Apprendre à coder en français : la commande reste en anglais, tout le reste est expliqué en français. Gratuit et libre.">
+<meta name="theme-color" content="#f1f4fa">
+<title>Code en clair</title>
+<link rel="manifest" href="manifest.json" crossorigin="use-credentials">
+<link rel="icon" href="icone.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css?v=20261015c">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-flame" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c1 3.2-.4 5-2 6.6C8.4 10.2 7 12 7 14.5A5 5 0 0 0 12 20a5 5 0 0 0 5-5.2c0-2.4-1.2-4.2-2.3-5.5-.3 1.5-1 2.4-2 2.8.6-3.1-.1-6.6-.7-10.1z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21s-7.5-4.6-9.5-9.3C1 8 3.4 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.6 0 6 3.5 4.5 7.2C19.5 16.4 12 21 12 21z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></g></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5v14l-4.5-4.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/></g></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="i-term" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 7 5 5-5 5M12 17h7"/></g></symbol>
+  <symbol id="i-git" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="9" r="2.5"/><path d="M6 8.5v7M18 11.5c0 3-3 4-9.5 5.2"/></g></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" d="M7 18.5h10a4 4 0 0 0 .6-8A6 6 0 0 0 6 9.6a4.5 4.5 0 0 0 1 8.9z"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></g></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" d="M3.5 10.5 12 3.5l8.5 7V20h-6v-5.5h-5V20h-6z"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="m3.5 6 5.5-2.5 6 2.5 5.5-2.5v14.5L15 20.5 9 18l-5.5 2.5z"/><path d="M9 3.5V18M15 6v14.5"/></g></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path fill="currentColor" d="M13.5 2 4.5 13.5H11L9.5 22l9-11.5H12z"/></symbol>
+  <symbol id="i-cards" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="7" y="3.5" width="13" height="16" rx="2.5"/><path d="M4 7v11.5a2.5 2.5 0 0 0 2.5 2.5H15"/></g></symbol>
+  <symbol id="i-road" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="6" r="2.5"/><path d="M7.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h7.5"/></g></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></g></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></g></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 2.5 20h19z"/><path d="M12 10v4.5M12 17.2v.1"/></g></symbol>
+  <symbol id="i-mouse" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="6" y="3" width="12" height="18" rx="6"/><path d="M12 7v3"/></g></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" d="M4 5h16v11H9l-5 4z"/></symbol>
+  <symbol id="i-medal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="5.5"/><path d="M8.5 3.5 10 8.8M15.5 3.5 14 8.8"/></g></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 8h7"/></g></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7.5 7.5 12 3l4.5 4.5M5 13v6.5h14V13"/></g></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 8h7"/></g></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7.5 7.5 12 3l4.5 4.5M5 13v6.5h14V13"/></g></symbol>
+</svg>
+
+<header class="top">
+  <div class="logo"><i>&gt;_</i><span>Code en clair</span></div>
+  <nav class="tabs" aria-label="Navigation">
+    <button class="tab" data-go="accueil" aria-current="page"><svg><use href="#i-home"/></svg>Accueil</button>
+    <button class="tab" data-go="mondes"><svg><use href="#i-map"/></svg>Mondes</button>
+    <button class="tab" data-go="defis"><svg><use href="#i-bolt"/></svg>Défis</button>
+    <button class="tab" data-go="cartes"><svg><use href="#i-cards"/></svg>Cartes-mots</button>
+    <button class="tab" data-go="parcours"><svg><use href="#i-road"/></svg>Ma route</button>
+  </nav>
+  <div class="hud">
+    <a class="guide-link" id="lien-guide" hidden href="guide.html" target="_blank" rel="noopener"><svg><use href="#i-book"/></svg><span>Le guide</span></a>
+    <div class="pill" style="color:var(--orange-d)" title="Jours d'affilée"><svg><use href="#i-flame"/></svg><span id="hud-streak">0</span></div>
+    <div class="lvl">
+      <div class="lvl-badge" id="hud-lvl">1</div>
+      <div class="lvl-txt"><b id="hud-lvl-name">Débutant</b><span id="hud-xp">0 / 200 points</span><div class="xpbar"><i id="hud-bar" style="width:0"></i></div></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="screen on" id="accueil"></section>
+  <section class="screen" id="mondes"><div class="world-head" id="world-head"></div><div class="cards" id="cards"></div></section>
+  <section class="screen" id="fiche"></section>
+  <section class="screen" id="defis"></section>
+  <section class="screen" id="cartes">
+    <div class="deck-tools">
+      <div><h1 class="big">Cartes-mots</h1><p class="sub">Retourne la carte. Écoute le mot. Tu le reconnaîtras dans les vidéos.</p></div>
+      <input id="deck-q" type="search" placeholder="Chercher un mot" aria-label="Chercher un mot">
+    </div>
+    <div class="deck" id="deck"></div>
+  </section>
+  <section class="screen" id="parcours"></section>
+</main>
+
+<div class="pop" id="pop">+10</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="donnees.js?v=20261015c"></script>
+<script src="app.js?v=20261015c"></script>
+</body>
+</html>
