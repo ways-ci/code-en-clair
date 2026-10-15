@@ -340,3 +340,13 @@ details.trap p{padding:0 12px 12px;font-size:14.5px}
 .hello{font-weight:700;color:oklch(1 0 0 / .9)}
 @media (max-width:820px){.guide-link span{display:none}}
 .guide-link[hidden]{display:none}
+/* Niveaux des étapes */
+.niv{display:inline-flex;align-items:center;font-size:12.5px;font-weight:800;padding:4px 11px;border-radius:999px;white-space:nowrap}
+.niv1{background:var(--green-s);color:var(--green-d)}
+.niv2{background:var(--blue-s);color:var(--blue-d)}
+.niv3{background:var(--violet-s);color:var(--violet-d)}
+.mission .niv{background:oklch(1 0 0 / .92)}
+/* Python : les espaces en début de ligne comptent, on les garde à l affichage */
+.tline code{white-space:pre-wrap}
+/* Jamais de ligature dans le code : un débutant doit voir >= et non le symbole fusionné */
+code,pre,kbd,.mono,.cmdhuge,.cmdbig,.tag,.chips-cmd code,.typebox,.typebox input,.term,.choice,.front b{font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}

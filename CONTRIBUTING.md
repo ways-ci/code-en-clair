@@ -50,6 +50,13 @@ ses textes :
 | `defi` | La consigne, les réponses acceptées (expressions régulières) et les erreurs expliquées |
 
 Puis ajoute l'`id` de ta carte dans une étape de son monde (`mondes`, champ `etapes`).
+Une étape s'écrit `["Nom de l'étape", ["id-1", "id-2"], niveau]`, avec trois niveaux :
+
+| Niveau | Nom | Pour quoi |
+|---|---|---|
+| 1 | Découvrir | Les premiers gestes, sans lesquels rien ne marche |
+| 2 | Pratiquer | Ce qu'on fait au quotidien |
+| 3 | Maîtriser | Ce qui rend autonome |
 
 ## Vérifier avant de proposer
 

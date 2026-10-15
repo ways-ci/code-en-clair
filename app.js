@@ -11,6 +11,9 @@ const MONDE = Object.fromEntries(D.mondes.map(m => [m.id, m]));
 const COUL = {terminal:"green", git:"orange", github:"violet", vscode:"blue", web:"orange", python:"blue", sql:"violet", ia:"green", azure:"blue"};
 /* Les mondes où l'on écrit du code dans un fichier, et non une commande dans le terminal */
 const MONDES_CODE = ["web","python","sql","ia"];
+/* Le niveau d'une étape : troisième élément de [nom, [cartes], niveau] dans donnees.js */
+const NIVEAU = {1:"Découvrir", 2:"Pratiquer", 3:"Maîtriser"};
+const badgeNiveau = n => `<span class="niv niv${n || 1}">Niveau ${n || 1} · ${NIVEAU[n || 1]}</span>`;
 const estCode = c => MONDES_CODE.includes(c.monde);
 const NIVEAUX = ["Débutant","Apprenti","Bricoleur","Artisan","Codeur","Bâtisseur","Développeur"];
 const PAR_NIVEAU = 200;
@@ -118,7 +121,7 @@ function accueil(){
       <h1 class="big">${esc(ec.e[0])}</h1>
       <div class="chips-cmd">${ec.e[1].map(id => `<code>${esc(CARTE[id].cmd)}</code>`).join("")}</div>
       <div class="seg">${ec.m.etapes.map(e => `<i class="${e[1].every(acquise) ? "on" : ""}"></i>`).join("")}</div>
-      <span style="font-weight:700">Étape ${ec.i + 1} sur ${ec.m.etapes.length} du monde ${esc(ec.m.nom)}</span>
+      <span style="font-weight:700;display:flex;gap:10px;align-items:center;flex-wrap:wrap">Étape ${ec.i + 1} sur ${ec.m.etapes.length} du monde ${esc(ec.m.nom)} ${badgeNiveau(ec.e[2])}</span>
       <div class="row2">
         <button class="btn" style="color:var(--${col}-d);box-shadow:0 4px 0 var(--${col}-d)" data-fiche="${prochaine}">${E.xp ? "Continuer" : "Commencer"} ${ic("arrow")}</button>
         <button class="btn ghostw" style="box-shadow:0 4px 0 var(--${col}-d)" data-defi="etape">${ic("bolt")} Défi de l'étape</button>
@@ -194,12 +197,24 @@ function monde(id, liste, titre){
   const h = $("#world-head");
   h.className = "world-head w-" + (titre ? "vscode" : id);
   h.innerHTML = tete + `<div class="world-pick">${choisis().filter(x => cartesDe(x.id).length).map(x => `<button data-world="${x.id}" aria-pressed="${!titre && x.id === id}">${x.nom}</button>`).join("")}</div>`;
-  $("#cards").innerHTML = cartes.length ? cartes.map(c => {
+  const tuile = c => {
     const e = etoiles(c.id);
     const st = (E.cartes[c.id] || {}).sait === "ok" ? `<span class="st ok">je sais</span>` : aRevoir(c.id) ? `<span class="st ko">à revoir</span>` : e ? `<span class="st new">en cours</span>` : `<span class="st new">nouvelle</span>`;
     return `<button class="card" data-fiche="${c.id}"><span class="cmdbig">${esc(c.cmd)}</span><span style="font-weight:700">${esc(c.dit)}</span><span class="sub">${esc(c.sert)}</span><div class="state"><div class="stars">${[1,2,3].map(i => ic("star", i <= e ? "on" : "")).join("")}</div>${st}</div></button>`;
-  }).join("")
-  : `<div class="tile empty"><div class="mid">Pas encore de carte pour ça.</div><p class="sub" style="margin-top:6px">Ta question est gardée sur l'accueil. Envoie-la à l'équipe : elle en fera une carte.</p><button class="btn go" style="margin-top:16px" data-go="accueil">Retour à l'accueil</button></div>`;
+  };
+  const vide = `<div class="tile empty"><div class="mid">Pas encore de carte pour ça.</div><p class="sub" style="margin-top:6px">Ta question est gardée sur l'accueil. Envoie-la à l'équipe : elle en fera une carte.</p><button class="btn go" style="margin-top:16px" data-go="accueil">Retour à l'accueil</button></div>`;
+  const zone = $("#cards");
+  if (!titre && m.etapes.length) {
+    zone.className = "";
+    zone.innerHTML = m.etapes.map((et, i) => {
+      const fait = et[1].filter(acquise).length;
+      return `<section class="etape"><div class="row-head" style="margin:22px 2px 12px"><h2 class="mid">Étape ${i + 1} · ${esc(et[0])}</h2><span style="display:flex;gap:10px;align-items:center">${badgeNiveau(et[2])}<span class="sub">${fait} sur ${et[1].length}</span></span></div>
+        <div class="cards">${et[1].map(id => tuile(CARTE[id])).join("")}</div></section>`;
+    }).join("");
+  } else {
+    zone.className = "cards";
+    zone.innerHTML = cartes.length ? cartes.map(tuile).join("") : vide;
+  }
   aller("mondes");
 }
 const VIDES = ["mon","mes","les","des","une","sur","dans","qui","que","est","pour","faire","veux","comment","avec","son","ses","the"];
