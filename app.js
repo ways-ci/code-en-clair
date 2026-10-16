@@ -267,6 +267,7 @@ function carte(id){
       <button class="btn hot" data-defi="carte" data-k="${id}">${ic("bolt")} Relever le défi · +15</button>
       <div class="stars" style="justify-content:center">${[1,2,3].map(i => ic("star", i <= etoiles(id) ? "on" : "")).join("")}</div>
       ${/^https:\/\//.test(c.doc || "") ? `<a class="doc-off" href="${esc(c.doc)}" target="_blank" rel="noopener noreferrer">${ic("book")} La documentation officielle<small>${esc(new URL(c.doc).hostname)}</small></a>` : ""}
+      ${/^https:\/\//.test(c.docFr || "") ? `<a class="doc-off" href="${esc(c.docFr)}" target="_blank" rel="noopener noreferrer">${ic("book")} La traduction française<small>plus ancienne</small></a>` : ""}
     </div>
     <div class="gridf">${t.join("")}</div>
   </div>`;

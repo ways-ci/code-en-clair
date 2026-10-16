@@ -2666,7 +2666,7 @@ cartes: [
  quand:"Pour tes premiers essais sur un seul fichier, dans un dossier sans tsconfig.json. Ensuite, node lance le .js produit.",
  lignes:[["npx tsc bonjour.ts","vérifie bonjour.ts et crée bonjour.js à côté"],["node bonjour.js","lance le JavaScript produit"],["npx tsc --noEmitOnError bonjour.ts","n'écrit pas le .js s'il reste la moindre erreur"]],
  reponse:[["(aucun message)","Aucune erreur : bonjour.js est créé à côté de bonjour.ts"],["prix.ts(2,1): error TS2322: Type 'string' is not assignable to type 'number'.","Fichier prix.ts, ligne 2, colonne 1 : tu ranges un texte dans une variable prévue pour un nombre"],["function trouver(nom) {","Dans le .js produit, les types ont disparu : il ne reste que du JavaScript"]],
- pieges:[["Le .js est créé malgré les erreurs","Par défaut, tsc signale les erreurs mais écrit quand même le JavaScript. Ajoute --noEmitOnError pour l'en empêcher, et corrige toujours avant de lancer."],["error TS5112: tsconfig.json is present but will not be loaded if files are specified on commandline. Use '--ignoreConfig' to skip this error.","Le dossier a un tsconfig.json : tape npx tsc tout seul, il compile tout le projet avec ses réglages."],["error TS6053: File 'bonjour.ts' not found.","Aucun fichier de ce nom dans le dossier où tu es. Vérifie avec ls."],["node bonjour.ts lance le fichier sans rien dire","Node 24 sait lancer un .ts en effaçant les types, mais sans les vérifier : il a lancé un fichier plein d'erreurs, en silence. La vérification, c'est tsc."]],
+ pieges:[["Le .js est créé malgré les erreurs","Par défaut, tsc signale les erreurs mais écrit quand même le JavaScript. Ajoute --noEmitOnError pour l'en empêcher, et corrige toujours avant de lancer."],["error TS5112: tsconfig.json is present but will not be loaded if files are specified on commandline. Use '--ignoreConfig' to skip this error.","Le dossier a un tsconfig.json : tape npx tsc tout seul, il compile tout le projet avec ses réglages. Source : les notes de version officielles de TypeScript 6.0 (le manuel en ligne dit encore le contraire)."],["error TS6053: File 'bonjour.ts' not found.","Aucun fichier de ce nom dans le dossier où tu es. Vérifie avec ls."],["node bonjour.ts lance le fichier sans rien dire","Node 24 sait lancer un .ts en effaçant les types, mais sans les vérifier : il a lancé un fichier plein d'erreurs, en silence. La vérification, c'est tsc."]],
  mots:["compiler","type"],
  cherche:"compiler un fichier typescript transformer en javascript tsc verifier les types lancer un fichier ts",
  defi:{consigne:"Compile le fichier bonjour.ts.", ok:["^npx tsc (\\./)?bonjour(\\.ts)?$"], fautes:[["^tsc bonjour","Sans npx, le terminal ne trouve pas tsc : npx tsc bonjour.ts."],["^node bonjour\\.ts$","node lance le fichier sans vérifier les types. Pour vérifier et compiler : npx tsc bonjour.ts."],["^npx tsc bonjour\\.js$","On compile le .ts, la source. Le .js, c'est le résultat."]], essai:"npx tsc bonjour.ts"},
@@ -2696,7 +2696,7 @@ cartes: [
  quand:"Dès que le projet a son tsconfig.json. Avant chaque essai et avant chaque commit : zéro erreur.",
  lignes:[["npx tsc","tout le projet, selon tsconfig.json"],["npx tsc --watch","recompile tout seul à chaque enregistrement. Ctrl + C pour arrêter"],["node dist/index.js","lance le résultat, si outDir vaut dist"]],
  reponse:[["(aucun message)","Zéro erreur : les .js sont écrits"],["laxiste.ts(1,18): error TS7006: Parameter 'x' implicitly has an 'any' type.","Une erreur, avec le fichier, la ligne et la colonne"],["Found 0 errors. Watching for file changes.","Avec --watch : tout va bien, tsc attend ton prochain enregistrement"]],
- pieges:[["tsc: The TypeScript Compiler - Version 7.0.2","tsc affiche son aide : il n'a trouvé de tsconfig.json ni ici ni dans les dossiers au-dessus. Crée-le avec npx tsc --init, ou vérifie que tu es dans le projet."],["error TS5112: tsconfig.json is present but will not be loaded if files are specified on commandline. Use '--ignoreConfig' to skip this error.","Avec un tsconfig.json, ne nomme aucun fichier : npx tsc tout seul."]],
+ pieges:[["tsc: The TypeScript Compiler - Version 7.0.2","tsc affiche son aide : il n'a trouvé de tsconfig.json ni ici ni dans les dossiers au-dessus. Crée-le avec npx tsc --init, ou vérifie que tu es dans le projet."],["error TS5112: tsconfig.json is present but will not be loaded if files are specified on commandline. Use '--ignoreConfig' to skip this error.","Avec un tsconfig.json, ne nomme aucun fichier : npx tsc tout seul. Source : les notes de version officielles de TypeScript 6.0 (le manuel en ligne dit encore le contraire)."]],
  mots:["compiler"],
  cherche:"compiler tout le projet tsconfig watch recompiler automatiquement verifier tout le code",
  defi:{consigne:"Ton projet a un tsconfig.json. Compile tout le projet.", ok:["^npx tsc$","^npx tsc (-p|--project) \\.$"], fautes:[["^npx tsc \\S+\\.ts$","Avec un tsconfig.json, nommer un fichier provoque l'erreur TS5112. Tape npx tsc tout seul."],["^tsc$","Sans npx, le terminal ne trouve pas tsc : npx tsc."],["^npx tsc --init$","--init crée le tsconfig.json. Il existe déjà : pour compiler, npx tsc."]], essai:"npx tsc"},
@@ -3000,7 +3000,7 @@ cartes: [
  mots:["strict mode","compiler"],
  cherche:"mode strict tsconfig strict true verifications strictes noimplicitany strictnullchecks",
  defi:{consigne:"Écris la ligne du tsconfig.json qui active toutes les vérifications strictes.", ok:["^\"strict\" ?: ?true ?,?$"], fautes:[["^\"strict\" ?: ?[\"']true","true s'écrit sans guillemets : c'est un booléen, pas un texte."],["^'strict'","En JSON, guillemets doubles obligatoires : \"strict\"."],["^strict ?:","En JSON, le nom de l'option prend des guillemets doubles : \"strict\": true."]], essai:"\"strict\": true,"},
- doc:"https://www.typescriptlang.org/tsconfig/#strict"},
+ doc:"https://www.typescriptlang.org/docs/handbook/release-notes/typescript-6-0.html"},
 
 /* ---------- REACT ---------- */
 {id:"re-create-vite",
@@ -3046,7 +3046,7 @@ cartes: [
  mots:["render","component","DOM"],
  cherche:"main jsx point de depart brancher react sur la page racine root afficher l'application",
  defi:{consigne:"Affiche le composant App dans la boîte d'id root.", ok:["^createRoot\\( ?document\\.getElementById\\( ?([\"'])root\\1 ?\\) ?\\)\\.render\\( ?<App ?/> ?\\) ?;?$"], fautes:[["\\.render\\( ?App ?\\)","Il manque les chevrons : render(<App />)."],["getElementById\\( ?[\"']#root","Pas de dièse avec getElementById : le nom seul, 'root'."],["^createRoot\\( ?<App","createRoot attend la boîte de la page. Le composant va dans render : createRoot(document.getElementById('root')).render(<App />)."]], essai:"createRoot(document.getElementById('root')).render(<App />)"},
- doc:"https://fr.react.dev/reference/react-dom/client/createRoot"},
+ doc:"https://react.dev/reference/react-dom/client/createRoot", docFr:"https://fr.react.dev/reference/react-dom/client/createRoot"},
 
 {id:"re-composant",
  monde:"react",
@@ -3061,7 +3061,7 @@ cartes: [
  mots:["component","JSX"],
  cherche:"creer un composant fonction composant morceau de page reutiliser majuscule",
  defi:{consigne:"Écris la première ligne d'un composant nommé Carte, avec le mot function.", ok:["^function Carte ?\\( ?\\) ?\\{?$"], fautes:[["^function carte","Un composant commence par une majuscule : Carte. En minuscules, React cherche une balise HTML."],["^function Carte ?\\{","Il manque les parenthèses : function Carte() {"],["^Function ","JavaScript fait la différence entre majuscules et minuscules : function, en minuscules."]], essai:"function Carte() {"},
- doc:"https://fr.react.dev/learn/your-first-component"},
+ doc:"https://react.dev/learn/your-first-component", docFr:"https://fr.react.dev/learn/your-first-component"},
 
 {id:"re-export-default",
  monde:"react",
@@ -3076,7 +3076,7 @@ cartes: [
  mots:["component","module"],
  cherche:"exporter un composant partager entre fichiers export default rendre disponible",
  defi:{consigne:"Écris la première ligne du composant Carte, exporté par défaut.", ok:["^export default function Carte ?\\( ?\\) ?\\{?$"], fautes:[["^export function Carte","C'est une exportation nommée. La consigne demande l'exportation par défaut : export default function Carte() {"],["^export defaut","default s'écrit en anglais, avec un l : export default."],["^default export","Dans l'autre ordre : export default."]], essai:"export default function Carte() {"},
- doc:"https://fr.react.dev/learn/importing-and-exporting-components"},
+ doc:"https://react.dev/learn/importing-and-exporting-components", docFr:"https://fr.react.dev/learn/importing-and-exporting-components"},
 
 {id:"re-import",
  monde:"react",
@@ -3091,7 +3091,7 @@ cartes: [
  mots:["import","module"],
  cherche:"importer un composant utiliser un autre fichier import from accolades",
  defi:{consigne:"Importe Carte, exporté par défaut depuis Carte.jsx dans le même dossier.", ok:["^import Carte from ([\"'])\\./Carte(\\.jsx)?\\1 ?;?$"], fautes:[["^import \\{ ?Carte ?\\}","Carte est exporté par défaut : pas d'accolades. import Carte from './Carte.jsx'"],["from ([\"'])Carte","Il manque ./ devant : sans lui, Vite cherche un paquet installé nommé Carte."],["from ([\"'])\\./carte","Écris le nom exact du fichier, avec sa majuscule : ./Carte.jsx."]], essai:"import Carte from './Carte.jsx'"},
- doc:"https://fr.react.dev/learn/importing-and-exporting-components"},
+ doc:"https://react.dev/learn/importing-and-exporting-components", docFr:"https://fr.react.dev/learn/importing-and-exporting-components"},
 
 {id:"re-fragment",
  monde:"react",
@@ -3106,7 +3106,7 @@ cartes: [
  mots:["JSX","element"],
  cherche:"plusieurs elements renvoyer deux balises sans div regrouper fragment parent unique",
  defi:{consigne:"Regroupe <h1>Bienvenue</h1> et <p>Bonjour</p> dans un fragment, sur une seule ligne.", ok:["^<> ?<h1>Bienvenue</h1> ?<p>Bonjour</p> ?</>$"], fautes:[["^<h1>Bienvenue</h1> ?<p>","Deux éléments sans parent : Vite refuse. Entoure-les de <> et </>."],["<p>Bonjour</p> ?<>$","Le fragment se ferme avec une barre oblique : </>."],["^<fragment>","En minuscules, c'est une balise inconnue. Écris <> ou <Fragment>."]], essai:"<><h1>Bienvenue</h1><p>Bonjour</p></>"},
- doc:"https://fr.react.dev/reference/react/Fragment"},
+ doc:"https://react.dev/reference/react/Fragment", docFr:"https://fr.react.dev/reference/react/Fragment"},
 
 {id:"re-classname",
  monde:"react",
@@ -3121,7 +3121,7 @@ cartes: [
  mots:["class","attribute","JSX"],
  cherche:"classe css en react class ne marche pas mettre un style balise fermee style en ligne",
  defi:{consigne:"Écris un paragraphe de classe prix qui contient 500.", ok:["^<p className=([\"'])prix\\1> ?500 ?</p>$"], fautes:[["^<p class=","En JSX, class s'écrit className."],["^<p classname=","Avec un N majuscule : className."],["^<p className=([\"'])\\.prix","Pas de point dans le JSX. Le point, c'est en CSS : className=\"prix\"."]], essai:"<p className=\"prix\">500</p>"},
- doc:"https://fr.react.dev/learn/writing-markup-with-jsx"},
+ doc:"https://react.dev/learn/writing-markup-with-jsx", docFr:"https://fr.react.dev/learn/writing-markup-with-jsx"},
 
 {id:"re-accolades",
  monde:"react",
@@ -3136,7 +3136,7 @@ cartes: [
  mots:["JSX","variable"],
  cherche:"afficher une variable dans le jsx accolades valeur javascript dans le html calcul",
  defi:{consigne:"Affiche la variable prenom dans un titre h1, après le mot Bonjour.", ok:["^<h1>Bonjour \\{ ?prenom ?\\}</h1>$"], fautes:[["\\{\\{ ?prenom","Une seule paire d'accolades suffit ici : {prenom}."],["^<h1>Bonjour prenom</h1>$","Sans accolades, le mot prenom s'affiche tel quel. Écris {prenom}."],["\\$\\{ ?prenom","${} sert dans les textes entre accents graves. En JSX : {prenom}, sans dollar."]], essai:"<h1>Bonjour {prenom}</h1>"},
- doc:"https://fr.react.dev/learn/javascript-in-jsx-with-curly-braces"},
+ doc:"https://react.dev/learn/javascript-in-jsx-with-curly-braces", docFr:"https://fr.react.dev/learn/javascript-in-jsx-with-curly-braces"},
 
 {id:"re-props",
  monde:"react",
@@ -3151,7 +3151,7 @@ cartes: [
  mots:["props","component"],
  cherche:"passer des donnees a un composant parametres props transmettre une valeur",
  defi:{consigne:"Affiche un Produit dont le nom est Mangue et le prix le nombre 500.", ok:["^<Produit nom=([\"'])Mangue\\1 prix=\\{ ?500 ?\\} ?/>$","^<Produit prix=\\{ ?500 ?\\} nom=([\"'])Mangue\\1 ?/>$"], fautes:[["prix=([\"'])500","Entre guillemets, 500 devient un texte. Pour un nombre : prix={500}."],["^<produit","Un composant commence par une majuscule : <Produit />."],["^<Produit [^/]*[^/]>$","Ferme la balise : />."]], essai:"<Produit nom=\"Mangue\" prix={500} />"},
- doc:"https://fr.react.dev/learn/passing-props-to-a-component"},
+ doc:"https://react.dev/learn/passing-props-to-a-component", docFr:"https://fr.react.dev/learn/passing-props-to-a-component"},
 
 {id:"re-children",
  monde:"react",
@@ -3166,7 +3166,7 @@ cartes: [
  mots:["children","props"],
  cherche:"contenu entre les balises emballage cadre carte enfants children",
  defi:{consigne:"Dans le composant, affiche le contenu reçu entre ses balises, à l'intérieur d'une div.", ok:["^<div( className=([\"'])[^\"']*\\2)?> ?\\{ ?children ?\\} ?</div>$"], fautes:[["\\{ ?Children","En minuscules : {children}."],["^<div[^>]*> ?children ?</div>$","Sans accolades, le mot children s'affiche tel quel. Écris {children}."],["\\{ ?childrens","Sans s de plus : {children}."]], essai:"<div>{children}</div>"},
- doc:"https://fr.react.dev/learn/passing-props-to-a-component"},
+ doc:"https://react.dev/learn/passing-props-to-a-component", docFr:"https://fr.react.dev/learn/passing-props-to-a-component"},
 
 {id:"re-map-key",
  monde:"react",
@@ -3181,7 +3181,7 @@ cartes: [
  mots:["array","element"],
  cherche:"afficher une liste boucle dans le jsx map tableau key cle unique liste de produits",
  defi:{consigne:"Dans map, crée un <li> qui affiche p.nom, avec p.id comme clé.", ok:["^<li key=\\{ ?p\\.id ?\\}> ?\\{ ?p\\.nom ?\\} ?</li>$"], fautes:[["^<li> ?\\{","Il manque la clé : <li key={p.id}>."],["key=([\"'])p\\.id","Entre guillemets, c'est le texte p.id, le même pour tous. Écris key={p.id}."],["key=\\{ ?Math\\.random","Une clé au hasard change à chaque affichage. Prends p.id."],["^<li id=","id est un attribut HTML. La clé de React s'écrit key."]], essai:"<li key={p.id}>{p.nom}</li>"},
- doc:"https://fr.react.dev/learn/rendering-lists"},
+ doc:"https://react.dev/learn/rendering-lists", docFr:"https://fr.react.dev/learn/rendering-lists"},
 
 {id:"re-et-et",
  monde:"react",
@@ -3196,7 +3196,7 @@ cartes: [
  mots:["boolean","JSX"],
  cherche:"afficher si condition rendu conditionnel cacher un element montrer seulement si",
  defi:{consigne:"Affiche <p>Promo</p> seulement si enPromo est vrai.", ok:["^\\{ ?enPromo ?&& ?<p>Promo</p> ?\\}$"], fautes:[["^\\{ ?enPromo ?& ?<","Deux esperluettes : &&."],["^\\{ ?if","Un if ne passe pas dans le JSX. Écris {enPromo && <p>Promo</p>}."],["^enPromo ?&&","Il manque les accolades autour : {enPromo && <p>Promo</p>}."]], essai:"{enPromo && <p>Promo</p>}"},
- doc:"https://fr.react.dev/learn/conditional-rendering"},
+ doc:"https://react.dev/learn/conditional-rendering", docFr:"https://fr.react.dev/learn/conditional-rendering"},
 
 {id:"re-ternaire",
  monde:"react",
@@ -3211,7 +3211,7 @@ cartes: [
  mots:["boolean","null"],
  cherche:"si sinon dans le jsx ternaire afficher l'un ou l'autre condition point d'interrogation",
  defi:{consigne:"Affiche le texte Ouvert si ouvert est vrai, Fermé sinon.", ok:["^\\{ ?ouvert ?\\? ?([\"'])Ouvert\\1 ?: ?([\"'])Fermé\\2 ?\\}$"], fautes:[["^\\{ ?if","Un if ne passe pas dans le JSX. Écris {ouvert ? \"Ouvert\" : \"Fermé\"}."],["^\\{ ?ouvert ?\\? ?([\"'])Ouvert\\1 ?\\}$","Il manque la partie sinon : : \"Fermé\"."],["^\\{ ?ouvert ?:","Le point d'interrogation d'abord : ouvert ? \"Ouvert\" : \"Fermé\"."]], essai:"{ouvert ? \"Ouvert\" : \"Fermé\"}"},
- doc:"https://fr.react.dev/learn/conditional-rendering"},
+ doc:"https://react.dev/learn/conditional-rendering", docFr:"https://fr.react.dev/learn/conditional-rendering"},
 
 {id:"re-onclick",
  monde:"react",
@@ -3226,7 +3226,7 @@ cartes: [
  mots:["event","function"],
  cherche:"cliquer sur un bouton reagir au clic evenement onclick lancer une fonction",
  defi:{consigne:"Écris un bouton qui affiche Envoyer et lance la fonction envoyer au clic.", ok:["^<button onClick=\\{ ?envoyer ?\\}> ?Envoyer ?</button>$","^<button onClick=\\{ ?\\(\\) ?=> ?envoyer\\(\\) ?\\}> ?Envoyer ?</button>$"], fautes:[["onClick=\\{ ?envoyer\\(\\) ?\\}","Avec les parenthèses, envoyer se lance pendant l'affichage. Donne son nom seul : onClick={envoyer}."],["onclick=","En JSX, avec une majuscule : onClick."],["onClick=([\"'])","Entre guillemets, c'est du texte. Une fonction se passe entre accolades : onClick={envoyer}."]], essai:"<button onClick={envoyer}>Envoyer</button>"},
- doc:"https://fr.react.dev/learn/responding-to-events"},
+ doc:"https://react.dev/learn/responding-to-events", docFr:"https://fr.react.dev/learn/responding-to-events"},
 
 {id:"re-usestate",
  monde:"react",
@@ -3241,7 +3241,7 @@ cartes: [
  mots:["state","hook"],
  cherche:"etat memoire d'un composant usestate compteur valeur qui change mettre a jour la page",
  defi:{consigne:"Crée un état prenom, avec sa fonction setPrenom, qui part d'un texte vide.", ok:["^const \\[ ?prenom ?, ?setPrenom ?\\] ?= ?useState\\( ?([\"'])\\1 ?\\) ?;?$"], fautes:[["^const \\{","Des crochets, pas des accolades : const [prenom, setPrenom]."],["^let prenom","Une variable ordinaire ne fait rien réafficher. Utilise useState."],["usestate\\(","Avec un S majuscule : useState."]], essai:"const [prenom, setPrenom] = useState(\"\");"},
- doc:"https://fr.react.dev/learn/state-a-components-memory"},
+ doc:"https://react.dev/learn/state-a-components-memory", docFr:"https://fr.react.dev/learn/state-a-components-memory"},
 
 {id:"re-set-fonction",
  monde:"react",
@@ -3256,7 +3256,7 @@ cartes: [
  mots:["state","function"],
  cherche:"ajouter un plusieurs fois etat pas a jour ancienne valeur fonction de mise a jour",
  defi:{consigne:"Ajoute 1 au compteur en partant de la valeur en attente, nommée c.", ok:["^setCompteur\\( ?\\(?c\\)? ?=> ?c ?\\+ ?1 ?\\) ?;?$"], fautes:[["^setCompteur\\( ?compteur ?\\+ ?1","Ça part de la valeur de cet affichage. Avec la valeur en attente : setCompteur((c) => c + 1)."],["^compteur ?(\\+\\+|\\+=|= ?compteur)","On ne change jamais un état directement : passe par setCompteur."],["^setCompteur\\( ?c ?\\+ ?1","Il manque la fonction : (c) => c + 1."]], essai:"setCompteur((c) => c + 1);"},
- doc:"https://fr.react.dev/reference/react/useState"},
+ doc:"https://react.dev/reference/react/useState", docFr:"https://fr.react.dev/reference/react/useState"},
 
 {id:"re-onchange",
  monde:"react",
@@ -3271,7 +3271,7 @@ cartes: [
  mots:["input","event","state"],
  cherche:"champ de saisie formulaire input onchange recuperer ce que tape l'utilisateur champ controle",
  defi:{consigne:"Relie un champ à l'état ville : value, et onChange qui appelle setVille avec le contenu du champ.", ok:["^<input value=\\{ ?ville ?\\} onChange=\\{ ?\\(?e\\)? ?=> ?setVille\\( ?e\\.target\\.value ?\\) ?\\} ?/>$"], fautes:[["^<input value=\\{ ?ville ?\\} ?/>$","Sans onChange, le champ est bloqué. Ajoute onChange={(e) => setVille(e.target.value)}."],["setVille\\( ?e\\.value","Le contenu est dans e.target.value."],["onchange=","En JSX, avec une majuscule : onChange."]], essai:"<input value={ville} onChange={(e) => setVille(e.target.value)} />"},
- doc:"https://fr.react.dev/reference/react-dom/components/input"},
+ doc:"https://react.dev/reference/react-dom/components/input", docFr:"https://fr.react.dev/reference/react-dom/components/input"},
 
 {id:"re-onsubmit",
  monde:"react",
@@ -3286,7 +3286,7 @@ cartes: [
  mots:["event"],
  cherche:"formulaire envoyer onsubmit la page se recharge empecher le rechargement preventdefault",
  defi:{consigne:"Écris la ligne qui empêche le formulaire de recharger la page. L'événement s'appelle e.", ok:["^e\\.preventDefault\\( ?\\) ?;?$"], fautes:[["^e\\.preventDefault ?;?$","Il manque les parenthèses : e.preventDefault();"],["^e\\.stopPropagation","stopPropagation arrête la remontée de l'événement, pas l'envoi. Écris e.preventDefault();"],["^e\\.preventdefault","Avec un D majuscule : preventDefault."]], essai:"e.preventDefault();"},
- doc:"https://fr.react.dev/learn/responding-to-events"},
+ doc:"https://react.dev/learn/responding-to-events", docFr:"https://fr.react.dev/learn/responding-to-events"},
 
 {id:"re-tableau-etat",
  monde:"react",
@@ -3301,7 +3301,7 @@ cartes: [
  mots:["array","state"],
  cherche:"ajouter a une liste etat tableau push ne marche pas la liste ne se met pas a jour trois points",
  defi:{consigne:"Ajoute Ananas à la fin de l'état fruits, sans modifier l'ancien tableau.", ok:["^setFruits\\( ?\\[ ?\\.\\.\\.fruits ?, ?([\"'])Ananas\\1 ?\\] ?\\) ?;?$"], fautes:[["^fruits\\.push","push modifie l'ancien tableau et React ne voit rien. Écris setFruits([...fruits, \"Ananas\"]);"],["^setFruits\\( ?fruits\\.push","push modifie l'ancien tableau et renvoie un nombre. Écris setFruits([...fruits, \"Ananas\"]);"],["^setFruits\\( ?\\[ ?fruits ?,","Sans les trois points, tout l'ancien tableau tombe dans une seule case. Écris [...fruits, \"Ananas\"]."],["^setFruits\\( ?\\[ ?\\.\\.fruits","Trois points, pas deux : ...fruits."]], essai:"setFruits([...fruits, \"Ananas\"]);"},
- doc:"https://fr.react.dev/learn/updating-arrays-in-state"},
+ doc:"https://react.dev/learn/updating-arrays-in-state", docFr:"https://fr.react.dev/learn/updating-arrays-in-state"},
 
 {id:"re-useeffect",
  monde:"react",
@@ -3316,7 +3316,7 @@ cartes: [
  mots:["effect","dependency array","hook"],
  cherche:"lancer du code apres l'affichage useeffect une seule fois au chargement dependances boucle infinie",
  defi:{consigne:"Écris un effet qui lance console.log(\"Prêt\") une seule fois, après le premier affichage.", ok:["^useEffect\\( ?\\(\\) ?=> ?\\{ ?console\\.log\\( ?([\"'])Prêt\\1 ?\\) ?;? ?\\} ?, ?\\[ ?\\] ?\\) ?;?$"], fautes:[["^useEffect\\(.*\\} ?\\) ?;?$","Sans tableau, l'effet repart après chaque affichage. Termine par , [] : }, []);"],["^useeffect","Avec un E majuscule : useEffect."],["^useEffect\\( ?async","Un effet ne peut pas être async."]], essai:"useEffect(() => { console.log(\"Prêt\"); }, []);"},
- doc:"https://fr.react.dev/reference/react/useEffect"},
+ doc:"https://react.dev/reference/react/useEffect", docFr:"https://fr.react.dev/reference/react/useEffect"},
 
 {id:"re-effet-nettoyage",
  monde:"react",
@@ -3331,7 +3331,7 @@ cartes: [
  mots:["effect"],
  cherche:"nettoyer un effet arreter un minuteur clearinterval effet lance deux fois return dans useeffect",
  defi:{consigne:"Écris le nettoyage d'un effet qui arrête le minuteur id.", ok:["^return \\(\\) ?=> ?\\{? ?clearInterval\\( ?id ?\\) ?;? ?\\}? ?;?$"], fautes:[["^return clearInterval\\(","Tu l'arrêtes tout de suite. Renvoie une fonction : return () => clearInterval(id);"],["^clearInterval","Sans return, React ne sait pas quoi lancer au nettoyage : return () => clearInterval(id);"],["clearinterval","Avec un I majuscule : clearInterval."]], essai:"return () => clearInterval(id);"},
- doc:"https://fr.react.dev/learn/synchronizing-with-effects"},
+ doc:"https://react.dev/learn/synchronizing-with-effects", docFr:"https://fr.react.dev/learn/synchronizing-with-effects"},
 
 {id:"re-fetch-effet",
  monde:"react",
@@ -3346,7 +3346,7 @@ cartes: [
  mots:["effect","JSON","state"],
  cherche:"charger des donnees au demarrage appeler une api dans react fetch dans useeffect json",
  defi:{consigne:"Demande /produits.json, puis lis la réponse r comme du JSON.", ok:["^fetch\\( ?([\"'])/produits\\.json\\1 ?\\)\\.then\\( ?\\(?r\\)? ?=> ?r\\.json\\(\\) ?\\) ?;?$"], fautes:[["=> ?r\\.json ?\\) ?;?$","json est une fonction : r.json()."],["^fetch\\( ?/produits","Il manque les guillemets autour de l'adresse : fetch(\"/produits.json\")."],["r\\.JSON\\(","En minuscules : r.json()."]], essai:"fetch(\"/produits.json\").then((r) => r.json())"},
- doc:"https://fr.react.dev/reference/react/useEffect"},
+ doc:"https://react.dev/reference/react/useEffect", docFr:"https://fr.react.dev/reference/react/useEffect"},
 
 {id:"re-npm-build",
  monde:"react",
@@ -3376,7 +3376,7 @@ cartes: [
  mots:["props","component"],
  cherche:"react typescript tsx typer les props type des proprietes erreur de type composant",
  defi:{consigne:"Écris la première ligne du composant Carte, qui reçoit titre, typé par CarteProps.", ok:["^function Carte\\( ?\\{ ?titre ?\\} ?: ?CarteProps ?\\) ?\\{?$"], fautes:[["\\{ ?titre ?: ?CarteProps ?\\}","Le type va après les accolades : ({ titre }: CarteProps)."],["^function Carte\\( ?\\{ ?titre ?\\} ?\\)","Il manque le type : ({ titre }: CarteProps)."],["\\} ?= ?CarteProps","Deux-points, pas égal : ({ titre }: CarteProps)."]], essai:"function Carte({ titre }: CarteProps) {"},
- doc:"https://fr.react.dev/learn/typescript"},
+ doc:"https://react.dev/learn/typescript", docFr:"https://fr.react.dev/learn/typescript"},
 
 /* ---------- LINUX ---------- */
 {id:"lx-less",
