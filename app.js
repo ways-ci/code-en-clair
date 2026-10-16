@@ -8,7 +8,9 @@ const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "
 const ic = (id, cls = "") => `<svg class="${cls}"><use href="#i-${id}"/></svg>`;
 const CARTE = Object.fromEntries(D.cartes.map(c => [c.id, c]));
 const MONDE = Object.fromEntries(D.mondes.map(m => [m.id, m]));
-const COUL = {terminal:"green", git:"orange", github:"violet", vscode:"blue", web:"orange", python:"blue", sql:"violet", ia:"green", azure:"blue"};
+const COUL = {terminal:"green", git:"orange", github:"violet", vscode:"blue", linux:"green", web:"orange", typescript:"blue", react:"violet", php:"violet", python:"blue", sql:"violet", ia:"green", azure:"blue"};
+/* La couleur d'un monde vient de COUL : une seule table, pour les tuiles, les bandeaux et les cartes */
+const fondMonde = id => { const c = COUL[id] || "violet"; return `background:var(--${c});box-shadow:0 5px 0 var(--${c}-d)`; };
 /* Les mondes où l'on écrit du code dans un fichier, et non une commande dans le terminal */
 const MONDES_CODE = ["web","python","sql","ia"];
 /* Le niveau d'une étape : troisième élément de [nom, [cartes], niveau] dans donnees.js */
@@ -181,7 +183,7 @@ function carteMonde(m){
   const l = cartesDe(m.id);
   if (!l.length) return `<div class="world locked" aria-disabled="true"><div class="wi">${ic(m.icone)}</div><h3>${esc(m.nom)}</h3><p class="sub" style="color:oklch(1 0 0 / .9)">${esc(m.desc)}</p><div class="lockline">${ic("lock")} Bientôt : les cartes arrivent</div></div>`;
   const ok = l.filter(c => acquise(c.id)).length;
-  return `<button class="world w-${m.id}" data-world="${m.id}"><div class="wi">${ic(m.icone)}</div><h3>${esc(m.nom)}</h3><p class="sub">${esc(m.desc)}</p><p style="font-weight:800">${ok} sur ${l.length} cartes</p><div class="xpbar"><i style="width:${Math.max(4, ok / l.length * 100)}%"></i></div></button>`;
+  return `<button class="world" style="${fondMonde(m.id)}" data-world="${m.id}"><div class="wi">${ic(m.icone)}</div><h3>${esc(m.nom)}</h3><p class="sub">${esc(m.desc)}</p><p style="font-weight:800">${ok} sur ${l.length} cartes</p><div class="xpbar"><i style="width:${Math.max(4, ok / l.length * 100)}%"></i></div></button>`;
 }
 
 /* ---------- Mondes et recherche ---------- */
@@ -195,7 +197,7 @@ function monde(id, liste, titre){
     ? `<div class="wi">${ic("search")}</div><div><p class="label" style="color:oklch(1 0 0 / .8)">Ta recherche</p><h1 class="big">${esc(titre)}</h1></div>`
     : `<div class="wi">${ic(m.icone)}</div><div><p class="label" style="color:oklch(1 0 0 / .8)">Monde</p><h1 class="big">${m.nom}</h1><div class="xpbar" style="margin-top:8px"><i style="width:${Math.max(4, ok / cartes.length * 100)}%"></i></div></div>`;
   const h = $("#world-head");
-  h.className = "world-head w-" + (titre ? "vscode" : id);
+  h.className = "world-head"; h.style.cssText = fondMonde(titre ? "vscode" : id);
   h.innerHTML = tete + `<div class="world-pick">${choisis().filter(x => cartesDe(x.id).length).map(x => `<button data-world="${x.id}" aria-pressed="${!titre && x.id === id}">${x.nom}</button>`).join("")}</div>`;
   const tuile = c => {
     const e = etoiles(c.id);
@@ -264,6 +266,7 @@ function carte(id){
       </div>
       <button class="btn hot" data-defi="carte" data-k="${id}">${ic("bolt")} Relever le défi · +15</button>
       <div class="stars" style="justify-content:center">${[1,2,3].map(i => ic("star", i <= etoiles(id) ? "on" : "")).join("")}</div>
+      ${/^https:\/\//.test(c.doc || "") ? `<a class="doc-off" href="${esc(c.doc)}" target="_blank" rel="noopener noreferrer">${ic("book")} La documentation officielle<small>${esc(new URL(c.doc).hostname)}</small></a>` : ""}
     </div>
     <div class="gridf">${t.join("")}</div>
   </div>`;

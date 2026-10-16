@@ -355,3 +355,8 @@ code,pre,kbd,.mono,.cmdhuge,.cmdbig,.tag,.chips-cmd code,.typebox,.typebox input
 .trad code,.trad span{overflow-wrap:anywhere;min-width:0}
 .flow .tag{white-space:normal;overflow-wrap:anywhere;text-align:left}
 .cmdhuge,.cmdbig,.say,.say-big,.mini .tag{overflow-wrap:anywhere}
+/* Lien vers la documentation officielle sur chaque carte */
+.doc-off{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:700;background:oklch(1 0 0 / .14);border-radius:12px;padding:10px 12px}
+.doc-off svg{width:20px;height:20px;flex:none}
+.doc-off small{display:block;font-weight:600;opacity:.85;margin-left:auto;font-size:12px}
+.doc-off:hover{background:oklch(1 0 0 / .24)}

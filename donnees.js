@@ -21,6 +21,7 @@ mondes: [
   {id:"vscode", nom:"VS Code", icone:"code", desc:"Ton atelier", etapes:[
     ["L'atelier", ["code-dot","vs-terminal","vs-save"], 1],
     ["Les raccourcis", ["vs-palette","vs-ouvrir","vs-git","vs-chercher"], 2]]},
+  {id:"linux", nom:"Linux et Docker", icone:"term", desc:"Ton serveur et tes conteneurs", etapes:[]},
   {id:"web", nom:"Le web", icone:"code", desc:"HTML, CSS, JavaScript", etapes:[
     ["Ta première page", ["web-doctype","web-h1","web-a","web-img","web-ul","web-div"], 1],
     ["Les formulaires", ["web-form","web-input","web-label","web-button"], 1],
@@ -28,6 +29,9 @@ mondes: [
     ["Placer les éléments", ["web-css-flex","web-css-justify","web-css-align","web-css-grid","web-css-media"], 2],
     ["JavaScript, les bases", ["web-script","web-js-console","web-js-const","web-js-if","web-js-function","web-js-array"], 2],
     ["Faire réagir la page", ["web-dom-query","web-dom-text","web-dom-click","web-dom-toggle","web-js-fetch"], 3]]},
+  {id:"typescript", nom:"TypeScript", icone:"code", desc:"Le JavaScript qui vérifie tes types", etapes:[]},
+  {id:"react", nom:"React", icone:"code", desc:"Des interfaces en composants", etapes:[]},
+  {id:"php", nom:"PHP et Laravel", icone:"code", desc:"Le langage de la majorité des sites", etapes:[]},
   {id:"python", nom:"Python", icone:"code", desc:"La langue de l'IA", etapes:[
     ["Lancer Python", ["py-version","py-lancer","py-console","py-print","py-commentaire"], 1],
     ["Les valeurs", ["py-variable","py-str","py-nombres","py-type","py-int","py-fstring","py-input"], 1],
@@ -60,9 +64,9 @@ mondes: [
 
 /* Les modèles proposés au premier passage. Chacun peut ensuite changer l'ordre. */
 modeles: [
-  {id:"bases", nom:"Les bases d'abord", desc:"Le terminal et Git avant tout, puis le reste.", mondes:["terminal","vscode","git","github","web","python","sql","ia","azure"]},
-  {id:"web", nom:"Développeur web", desc:"Vite vers tes premières pages en ligne.", mondes:["vscode","terminal","web","git","github","sql","python","ia","azure"]},
-  {id:"ia", nom:"IA et Python", desc:"Python d'abord, pour construire avec l'IA.", mondes:["vscode","terminal","python","git","github","ia","sql","azure","web"]}
+  {id:"bases", nom:"Les bases d'abord", desc:"Le terminal et Git avant tout, puis le reste.", mondes:["terminal","vscode","git","github","linux","web","typescript","react","php","python","sql","ia","azure"]},
+  {id:"web", nom:"Développeur web", desc:"Vite vers tes premières pages en ligne.", mondes:["vscode","terminal","web","git","github","typescript","react","php","sql","python","linux","ia","azure"]},
+  {id:"ia", nom:"IA et Python", desc:"Python d'abord, pour construire avec l'IA.", mondes:["vscode","terminal","python","git","github","ia","sql","linux","azure","web","typescript","react","php"]}
 ],
 
 cartes: [
