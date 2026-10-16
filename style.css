@@ -350,3 +350,8 @@ details.trap p{padding:0 12px 12px;font-size:14.5px}
 .tline code{white-space:pre-wrap}
 /* Jamais de ligature dans le code : un débutant doit voir >= et non le symbole fusionné */
 code,pre,kbd,.mono,.cmdhuge,.cmdbig,.tag,.chips-cmd code,.typebox,.typebox input,.term,.choice,.front b{font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}
+/* Les longs textes sans espace (adresses, JSON, commandes) passent à la ligne au lieu de déborder */
+.trad div{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.trad code,.trad span{overflow-wrap:anywhere;min-width:0}
+.flow .tag{white-space:normal;overflow-wrap:anywhere;text-align:left}
+.cmdhuge,.cmdbig,.say,.say-big,.mini .tag{overflow-wrap:anywhere}

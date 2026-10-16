@@ -14,7 +14,7 @@ const MONDES_CODE = ["web","python","sql","ia"];
 /* Le niveau d'une étape : troisième élément de [nom, [cartes], niveau] dans donnees.js */
 const NIVEAU = {1:"Découvrir", 2:"Pratiquer", 3:"Maîtriser"};
 const badgeNiveau = n => `<span class="niv niv${n || 1}">Niveau ${n || 1} · ${NIVEAU[n || 1]}</span>`;
-const estCode = c => MONDES_CODE.includes(c.monde);
+const estCode = c => MONDES_CODE.includes(c.monde) || c.code === true;
 const NIVEAUX = ["Débutant","Apprenti","Bricoleur","Artisan","Codeur","Bâtisseur","Développeur"];
 const PAR_NIVEAU = 200;
 
