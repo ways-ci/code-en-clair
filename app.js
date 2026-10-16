@@ -8,11 +8,11 @@ const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "
 const ic = (id, cls = "") => `<svg class="${cls}"><use href="#i-${id}"/></svg>`;
 const CARTE = Object.fromEntries(D.cartes.map(c => [c.id, c]));
 const MONDE = Object.fromEntries(D.mondes.map(m => [m.id, m]));
-const COUL = {terminal:"green", git:"orange", github:"violet", vscode:"blue", linux:"green", web:"orange", typescript:"blue", react:"violet", php:"violet", python:"blue", sql:"violet", ia:"green", azure:"blue"};
+const COUL = {terminal:"green", git:"orange", github:"violet", vscode:"blue", linux:"green", web:"orange", typescript:"blue", react:"violet", php:"violet", python:"blue", sql:"violet", ia:"green", azure:"blue", data:"green", powerbi:"orange", bureautique:"green", powershell:"blue", r:"blue", cyber:"orange", wordpress:"violet", arduino:"green"};
 /* La couleur d'un monde vient de COUL : une seule table, pour les tuiles, les bandeaux et les cartes */
 const fondMonde = id => { const c = COUL[id] || "violet"; return `background:var(--${c});box-shadow:0 5px 0 var(--${c}-d)`; };
 /* Les mondes où l'on écrit du code dans un fichier, et non une commande dans le terminal */
-const MONDES_CODE = ["web","typescript","react","php","python","sql","ia"];
+const MONDES_CODE = ["web","typescript","react","php","python","sql","ia","data","powerbi","bureautique","r","wordpress","arduino"];
 /* Le niveau d'une étape : troisième élément de [nom, [cartes], niveau] dans donnees.js */
 const NIVEAU = {1:"Découvrir", 2:"Pratiquer", 3:"Maîtriser"};
 const badgeNiveau = n => `<span class="niv niv${n || 1}">Niveau ${n || 1} · ${NIVEAU[n || 1]}</span>`;
@@ -88,7 +88,7 @@ function depart(){
     <h1 class="big" style="max-width:none">Par quoi veux-tu commencer ?</h1>
     <p class="hello" style="max-width:60ch">Les commandes restent en anglais, tout le reste est en français. Choisis un chemin : tu pourras changer l'ordre quand tu veux.</p>
   </div>
-  <div class="trio">${D.modeles.map(md => `
+  <div class="trio" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))">${D.modeles.map(md => `
     <button class="tile card" data-modele="${md.id}" style="min-height:220px">
       <span class="mid">${esc(md.nom)}</span><span class="sub">${esc(md.desc)}</span>
       <div class="flow" style="margin-top:6px">${md.mondes.slice(0, 5).map((id, i) => `${i ? ic("arrow") : ""}<span class="tag">${esc(MONDE[id].nom)}</span>`).join("")}</div>
