@@ -121,7 +121,9 @@ if ! grep -q "codeenclair-comptes.conf" "$CONF"; then
   SECOURS="$RACINE/nginx-avant-comptes.conf"
   cp "$CONF" "$SECOURS"
   # Une seule inclusion, dans le bloc HTTPS (celui qui écoute le 443)
-  awk -v ligne="    include snippets/codeenclair-comptes.conf;" '{print} !fait && /^[[:space:]]*listen[^;]*443/ {print ligne; fait=1}' "$SECOURS" > "$CONF"
+  # sed et non awk : sur le serveur du 30/10, l'ajout par awk n'avait rien inséré, sans erreur
+  sed -i --follow-symlinks '0,/listen[^;]*443.*$/s//&\n    include snippets\/codeenclair-comptes.conf;/' "$CONF"
+  grep -q "codeenclair-comptes.conf" "$CONF" || { echo "L'ajout de /api/ dans nginx n'a pas pris : rien n'est changé."; cp "$SECOURS" "$CONF"; exit 1; }
   if ! nginx -t 2>/dev/null; then cp "$SECOURS" "$CONF"; nginx -t; echo "nginx refuse : configuration d'origine remise."; exit 1; fi
 fi
 chmod 644 /etc/nginx/snippets/codeenclair-comptes.conf
@@ -129,6 +131,7 @@ nginx -t 2>/dev/null && systemctl reload nginx
 (cd "$RACINE/depot" && install -m 644 index.html style.css app.js donnees.js compte.js pocketbase.umd.js confidentialite.html sw.js manifest.json icone.svg "$SITE/")
 
 echo "== 5. Contrôle"
+sleep 3   # le temps que nginx ait fini de recharger : sans attente, le contrôle voyait encore l'ancienne configuration
 REPONSE=$(curl -fsS "https://$DOMAINE/api/collections/users/auth-methods" || true)
 echo "$REPONSE" | grep -q '"oauth2"' && echo "OK : les comptes répondent sur https://$DOMAINE" || { echo "L'adresse publique ne répond pas comme prévu :"; echo "$REPONSE" | head -c 300; exit 1; }
 CODE=$(curl -s -o /dev/null -w '%{http_code}' "https://$DOMAINE/_/")
