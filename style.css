@@ -387,3 +387,16 @@ code,pre,kbd,.mono,.cmdhuge,.cmdbig,.tag,.chips-cmd code,.typebox,.typebox input
   .lvl{min-width:0}
   .lvl-txt{display:none}
 }
+/* Ma route : deux colonnes sur grand écran, une seule sur téléphone (la règle ne doit pas vivre dans le code, sinon elle gagne sur le téléphone) */
+.route2{grid-template-columns:1.3fr 1fr}
+.actions-route{display:flex;align-items:center;gap:6px;flex:none}
+@media (max-width:820px){
+  .route2{grid-template-columns:1fr}
+  /* Les flèches et le bouton passent sous le nom : le texte garde toute la largeur */
+  .ligne-route.dans{flex-wrap:wrap}
+  .ligne-route.dans .actions-route{width:100%;padding-left:44px}
+  .ligne-route.dans .actions-route .btn{margin-left:auto}
+  /* Le titre garde sa ligne, l'explication passe dessous */
+  #parcours .row-head{flex-wrap:wrap}
+  #parcours .row-head .sub{flex-basis:100%}
+}

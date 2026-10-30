@@ -372,14 +372,14 @@ function parcours(){
   const hors = D.mondes.filter(m => !f.includes(m.id));
   const ligne = (m, i, inclus) => {
     const l = cartesDe(m.id), ok = l.filter(c => acquise(c.id)).length;
-    return `<div class="mini" style="padding:12px 0">
+    return `<div class="mini ligne-route${inclus ? " dans" : ""}" style="padding:12px 0">
       <span class="num" style="width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:800 15px var(--mono);background:${inclus ? `var(--${COUL[m.id] || "violet"})` : "var(--bg)"};color:${inclus ? "#fff" : "var(--muted)"};flex:none">${inclus ? i + 1 : "+"}</span>
       <div style="flex:1;min-width:0"><b>${esc(m.nom)}</b><p class="sub">${esc(m.desc)} · ${l.length ? `${ok} sur ${l.length} cartes` : "bientôt"}</p></div>
-      ${inclus ? `
+      <div class="actions-route">${inclus ? `
         <button class="qdel" data-monter="${m.id}" aria-label="Monter ${esc(m.nom)}" ${i === 0 ? "disabled" : ""}><svg style="transform:rotate(-90deg)"><use href="#i-arrow"/></svg></button>
         <button class="qdel" data-descendre="${m.id}" aria-label="Descendre ${esc(m.nom)}" ${i === dans.length - 1 ? "disabled" : ""}><svg style="transform:rotate(90deg)"><use href="#i-arrow"/></svg></button>
         <button class="btn sm" data-retirer="${m.id}">Retirer</button>`
-      : `<button class="btn sm go" data-ajouter="${m.id}">Ajouter</button>`}
+      : `<button class="btn sm go" data-ajouter="${m.id}">Ajouter</button>`}</div>
     </div>`;
   };
   $("#parcours").innerHTML = `
@@ -388,7 +388,7 @@ function parcours(){
       const l = cartesDe(m.id), fini = l.length && l.every(c => acquise(c.id)), cour = etapeCourante() && etapeCourante().m.id === m.id;
       return `<div class="stop ${fini ? "done" : cour ? "cur" : ""}"><div class="node">${i + 1}</div><span class="when">${fini ? "acquis" : cour ? "en cours" : l.length ? "à venir" : "bientôt"}</span><h3>${esc(m.nom)}</h3></div>`;
     }).join("") || `<p class="sub" style="padding:0 16px">Ajoute au moins un monde ci-dessous.</p>`}</div></div>
-    <div class="trio" style="grid-template-columns:1.3fr 1fr;margin-top:18px">
+    <div class="trio route2" style="margin-top:18px">
       <div class="tile">
         <div class="row-head" style="margin:0 0 6px"><h2 class="mid">Dans ma route</h2><span class="sub">les flèches changent l'ordre</span></div>
         ${dans.map((m, i) => ligne(m, i, true)).join("")}
