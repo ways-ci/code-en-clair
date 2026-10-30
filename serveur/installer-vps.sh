@@ -37,7 +37,8 @@ curl -fsSL "$BASE/checksums.txt" -o "$TMP/checksums.txt"
 (cd "$TMP" && grep " $ZIP\$" checksums.txt | sha256sum -c -) || { echo "Somme de contrôle fausse : rien n'est installé."; exit 1; }
 unzip -oq "$TMP/$ZIP" pocketbase -d "$TMP"
 install -m 755 "$TMP/pocketbase" "$RACINE/pocketbase"
-if [ -d "$RACINE/depot/.git" ]; then git -C "$RACINE/depot" pull -q; else git clone -q "$DEPOT" "$RACINE/depot"; fi
+# Le dépôt appartient à l'utilisateur du service : sans safe.directory, git refuse d'y travailler en root
+if [ -d "$RACINE/depot/.git" ]; then git -c safe.directory="$RACINE/depot" -C "$RACINE/depot" pull -q; else git clone -q "$DEPOT" "$RACINE/depot"; fi
 rm -rf "$TMP"
 mkdir -p "$RACINE/pb_data"
 chown -R codeenclair: "$RACINE"
@@ -111,8 +112,10 @@ location /api/ {
     proxy_read_timeout 360s;
     client_max_body_size 3m;
 }
-# La console d'administration n'est jamais publique
+# La console d'administration n'est jamais publique...
 location /_/ { return 404; }
+# ...sauf son adresse nue, où la fenêtre de connexion revient : on y sert notre page, qui se ferme seule
+location = /_/ { try_files /connexion-terminee.html =404; }
 EOF
 CONF=$(grep -l "server_name[^;]*$DOMAINE" /etc/nginx/sites-enabled/* | head -1)
 [ -n "$CONF" ] || { echo "Aucun site nginx pour $DOMAINE dans /etc/nginx/sites-enabled."; exit 1; }
@@ -128,11 +131,13 @@ if ! grep -q "codeenclair-comptes.conf" "$CONF"; then
 fi
 chmod 644 /etc/nginx/snippets/codeenclair-comptes.conf
 nginx -t 2>/dev/null && systemctl reload nginx
-(cd "$RACINE/depot" && install -m 644 index.html style.css app.js donnees.js compte.js pocketbase.umd.js confidentialite.html sw.js manifest.json icone.svg "$SITE/")
+(cd "$RACINE/depot" && install -m 644 index.html style.css app.js donnees.js compte.js pocketbase.umd.js confidentialite.html connexion-terminee.html connexion-terminee.js sw.js manifest.json icone.svg "$SITE/")
 
 echo "== 5. Contrôle"
 sleep 3   # le temps que nginx ait fini de recharger : sans attente, le contrôle voyait encore l'ancienne configuration
 REPONSE=$(curl -fsS "https://$DOMAINE/api/collections/users/auth-methods" || true)
 echo "$REPONSE" | grep -q '"oauth2"' && echo "OK : les comptes répondent sur https://$DOMAINE" || { echo "L'adresse publique ne répond pas comme prévu :"; echo "$REPONSE" | head -c 300; exit 1; }
-CODE=$(curl -s -o /dev/null -w '%{http_code}' "https://$DOMAINE/_/")
-[ "$CODE" = 404 ] && echo "OK : la console d'administration est fermée au public" || echo "ATTENTION : /_/ répond $CODE, elle devrait répondre 404"
+# /_/ seul sert notre page de fin de connexion ; tout ce qui est dessous (la console) reste fermé
+CODE=$(curl -s -o /dev/null -w '%{http_code}' "https://$DOMAINE/_/images/logo.svg")
+[ "$CODE" = 404 ] && echo "OK : la console d'administration est fermée au public" || echo "ATTENTION : /_/images/logo.svg répond $CODE, il devrait répondre 404"
+curl -fsS "https://$DOMAINE/_/" | grep -q "connexion-terminee.js" && echo "OK : la fenêtre de connexion revient sur notre page" || echo "ATTENTION : /_/ ne sert pas la page de fin de connexion"
