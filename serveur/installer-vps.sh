@@ -47,7 +47,8 @@ if [ ! -f "$SECRETS" ]; then
   read -rp  "GitHub, Client ID : " GH_ID;     read -rsp "GitHub, Client secret (invisible) : " GH_SECRET; echo
   read -rp  "Google, Client ID (Entrée pour plus tard) : " GO_ID
   GO_SECRET=""; [ -n "$GO_ID" ] && { read -rsp "Google, Client secret (invisible) : " GO_SECRET; echo; }
-  umask 077
+  # Le masque strict ne vaut que pour ce fichier : posé pour tout le script, il rendait le site illisible par nginx (403)
+  ( umask 077
   cat > "$SECRETS" <<EOF
 CEC_URL=https://$DOMAINE
 CEC_GITHUB_ID=$GH_ID
@@ -55,6 +56,7 @@ CEC_GITHUB_SECRET=$GH_SECRET
 CEC_GOOGLE_ID=$GO_ID
 CEC_GOOGLE_SECRET=$GO_SECRET
 EOF
+  )
   chmod 600 "$SECRETS"
   echo "Gardés dans $SECRETS (lisible par root seulement). Pour ajouter Google plus tard : modifier ce fichier puis systemctl restart codeenclair-comptes"
 else
@@ -115,13 +117,16 @@ EOF
 CONF=$(grep -l "server_name[^;]*$DOMAINE" /etc/nginx/sites-enabled/* | head -1)
 [ -n "$CONF" ] || { echo "Aucun site nginx pour $DOMAINE dans /etc/nginx/sites-enabled."; exit 1; }
 if ! grep -q "codeenclair-comptes.conf" "$CONF"; then
-  cp "$CONF" "$CONF.avant-comptes"
+  # La copie de secours va HORS de sites-enabled : nginx charge tout ce qui s'y trouve
+  SECOURS="$RACINE/nginx-avant-comptes.conf"
+  cp "$CONF" "$SECOURS"
   # Une seule inclusion, dans le bloc HTTPS (celui qui écoute le 443)
-  awk -v ligne="    include snippets/codeenclair-comptes.conf;" '{print} !fait && /listen[^;]*443/ {print ligne; fait=1}' "$CONF.avant-comptes" > "$CONF"
-  if ! nginx -t 2>/dev/null; then cp "$CONF.avant-comptes" "$CONF"; nginx -t; echo "nginx refuse : configuration d'origine remise."; exit 1; fi
+  awk -v ligne="    include snippets/codeenclair-comptes.conf;" '{print} !fait && /^[[:space:]]*listen[^;]*443/ {print ligne; fait=1}' "$SECOURS" > "$CONF"
+  if ! nginx -t 2>/dev/null; then cp "$SECOURS" "$CONF"; nginx -t; echo "nginx refuse : configuration d'origine remise."; exit 1; fi
 fi
+chmod 644 /etc/nginx/snippets/codeenclair-comptes.conf
 nginx -t 2>/dev/null && systemctl reload nginx
-(cd "$RACINE/depot" && cp index.html style.css app.js donnees.js compte.js pocketbase.umd.js confidentialite.html sw.js manifest.json icone.svg "$SITE/")
+(cd "$RACINE/depot" && install -m 644 index.html style.css app.js donnees.js compte.js pocketbase.umd.js confidentialite.html sw.js manifest.json icone.svg "$SITE/")
 
 echo "== 5. Contrôle"
 REPONSE=$(curl -fsS "https://$DOMAINE/api/collections/users/auth-methods" || true)
