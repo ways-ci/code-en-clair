@@ -360,3 +360,30 @@ code,pre,kbd,.mono,.cmdhuge,.cmdbig,.tag,.chips-cmd code,.typebox,.typebox input
 .doc-off svg{width:20px;height:20px;flex:none}
 .doc-off small{display:block;font-weight:600;opacity:.85;margin-left:auto;font-size:12px}
 .doc-off:hover{background:oklch(1 0 0 / .24)}
+
+/* ---------- Le compte (facultatif) ---------- */
+.compte-btn{border:0;cursor:pointer;color:var(--muted);position:relative}
+.compte-btn[hidden]{display:none}
+.compte-btn.on{color:var(--green-d)}
+.compte-btn.on::after{content:"";position:absolute;right:6px;top:6px;width:8px;height:8px;border-radius:50%;background:var(--green)}
+.compte-btn.attente::after{background:var(--orange)}
+.compte{display:grid;gap:18px;max-width:760px}
+.compte .big{margin:6px 0 8px}
+.connexions{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0 12px}
+.btn.connexion svg{width:22px;height:22px}
+.petit{font-size:13.5px}
+.compte a,.page a:not(.btn){color:var(--blue-d);font-weight:700}
+.etat-sauvegarde{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--green-d);margin-top:12px}
+.etat-sauvegarde svg{width:20px;height:20px}
+.etat-sauvegarde.attente{color:var(--orange-d)}
+.tile.danger{border-color:var(--line)}
+.bandeau{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.bandeau > svg{width:30px;height:30px;color:var(--blue);flex:none}
+.bandeau .qdel svg{width:18px;height:18px}
+/* Écrans moyens : le bouton Compte rejoint la barre du haut, le niveau ne garde que son badge (comme sur téléphone) */
+@media (max-width:1180px) and (min-width:821px){
+  .top{gap:12px;padding:10px 16px}
+  .tab{white-space:nowrap;padding:9px 10px}
+  .lvl{min-width:0}
+  .lvl-txt{display:none}
+}

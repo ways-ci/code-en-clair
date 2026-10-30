@@ -1,6 +1,6 @@
 /* Garde l'outil utilisable sans connexion. Changer VERSION à chaque mise en ligne, comme le ?v= de index.html. */
-const VERSION = "20261016f";
-const FICHIERS = ["./", "index.html", "style.css?v=20261016f", "app.js?v=20261016f", "donnees.js?v=20261016f", "manifest.json", "icone.svg"];
+const VERSION = "20261030a";
+const FICHIERS = ["./", "index.html", "style.css?v=20261030a", "app.js?v=20261030a", "donnees.js?v=20261030a", "pocketbase.umd.js?v=20261030a", "compte.js?v=20261030a", "confidentialite.html", "manifest.json", "icone.svg"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(FICHIERS)).then(() => self.skipWaiting()));
 });
@@ -9,7 +9,9 @@ self.addEventListener("activate", e => {
 });
 /* Réseau d'abord quand il y en a (pour avoir la dernière version), sinon la copie gardée. */
 self.addEventListener("fetch", e => {
-  if (e.request.method !== "GET" || new URL(e.request.url).origin !== location.origin) return;
+  const url = new URL(e.request.url);
+  /* Le compte passe toujours par le réseau : rien de ce qui touche à /api/ n'est gardé en copie */
+  if (e.request.method !== "GET" || url.origin !== location.origin || url.pathname.startsWith("/api/")) return;
   e.respondWith(
     fetch(e.request).then(r => {
       if (r.ok) { const copie = r.clone(); caches.open(VERSION).then(c => c.put(e.request, copie)); }
