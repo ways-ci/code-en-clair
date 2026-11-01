@@ -400,3 +400,8 @@ code,pre,kbd,.mono,.cmdhuge,.cmdbig,.tag,.chips-cmd code,.typebox,.typebox input
   #parcours .row-head{flex-wrap:wrap}
   #parcours .row-head .sub{flex-basis:100%}
 }
+
+/* À propos : écrit dans la page, lisible sans programme ni compte (validation de la marque par Google, 01/11) */
+.apropos{margin-top:28px;max-width:860px}
+.apropos .tile{display:grid;gap:8px}
+.apropos a{color:inherit;text-decoration:underline}
