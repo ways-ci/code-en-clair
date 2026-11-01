@@ -130,15 +130,21 @@ mondes: [
     ["Faire clignoter une LED",["ard-setup","ard-loop","ard-pinmode","ard-digitalwrite","ard-delay","ard-point-virgule","ard-commentaire"],1],
     ["Lire un bouton",["ard-int","ard-digitalread","ard-input-pullup","ard-if"],2],
     ["Mesurer et afficher",["ard-serial-begin","ard-serial-println","ard-analogread","ard-analogwrite"],2],
-    ["Sans bloquer, avec des bibliothèques",["ard-millis","ard-const","ard-include","ard-lib-install"],3]]}
+    ["Sans bloquer, avec des bibliothèques",["ard-millis","ard-const","ard-include","ard-lib-install"],3]]},
+  /* Vague 3 (GO d'EBAKA 01/11) : déclarés vides, affichés « bientôt », remplis monde par monde. */
+  {id:"nodejs", nom:"Node.js", icone:"term", desc:"JavaScript côté serveur, et npm", etapes:[]},
+  {id:"nextjs", nom:"Next.js", icone:"code", desc:"Des sites et applications web complets", etapes:[]},
+  {id:"supabase", nom:"Supabase et PostgreSQL", icone:"cloud", desc:"Une base de données et des comptes, en ligne", etapes:[]},
+  {id:"reactnative", nom:"React Native et Expo", icone:"code", desc:"Des applications pour téléphone", etapes:[]},
+  {id:"rust", nom:"Rust", icone:"code", desc:"Un langage rapide et sûr", etapes:[]}
 ],
 
 /* Les modèles proposés au premier passage. Chacun peut ensuite changer l'ordre. */
 modeles: [
-  {id:"bases", nom:"Les bases d'abord", desc:"Le terminal et Git avant tout, puis le reste.", mondes:["terminal", "vscode", "git", "github","cyber", "linux", "web", "typescript", "react", "php", "python", "sql", "ia", "azure"]},
-  {id:"web", nom:"Développeur web", desc:"Vite vers tes premières pages en ligne.", mondes:["vscode", "terminal", "web", "git", "github", "typescript", "react", "php","wordpress", "sql", "python", "linux", "ia", "azure"]},
-  {id:"ia", nom:"IA et Python", desc:"Python d'abord, pour construire avec l'IA.", mondes:["vscode", "terminal", "python", "git", "github", "ia", "sql", "linux", "azure", "web", "typescript", "react", "php"]},
-  {id:"donnees", nom:"Données et bureautique", desc:"Tu viens d'Excel : automatise, analyse, présente.", mondes:["vscode","bureautique","data","powerbi","python","sql","r","powershell","cyber","terminal","git","github","ia","azure","web","linux","typescript","react","php","wordpress","arduino"]}
+  {id:"bases", nom:"Les bases d'abord", desc:"Le terminal et Git avant tout, puis le reste.", mondes:["terminal", "vscode", "git", "github","cyber", "linux", "web", "typescript", "react", "php", "python", "sql", "ia", "azure", "nodejs", "nextjs", "supabase", "reactnative", "rust"]},
+  {id:"web", nom:"Développeur web", desc:"Vite vers tes premières pages en ligne.", mondes:["vscode", "terminal", "web", "git", "github", "typescript", "react", "php","wordpress", "sql", "python", "linux", "ia", "azure", "nodejs", "nextjs", "supabase", "reactnative", "rust"]},
+  {id:"ia", nom:"IA et Python", desc:"Python d'abord, pour construire avec l'IA.", mondes:["vscode", "terminal", "python", "git", "github", "ia", "sql", "linux", "azure", "web", "typescript", "react", "php", "nodejs", "nextjs", "supabase", "reactnative", "rust"]},
+  {id:"donnees", nom:"Données et bureautique", desc:"Tu viens d'Excel : automatise, analyse, présente.", mondes:["vscode","bureautique","data","powerbi","python","sql","r","powershell","cyber","terminal","git","github","ia","azure","web","linux","typescript","react","php","wordpress","arduino", "nodejs", "nextjs", "supabase", "reactnative", "rust"]}
 ],
 
 cartes: [

@@ -8,11 +8,11 @@ const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "
 const ic = (id, cls = "") => `<svg class="${cls}"><use href="#i-${id}"/></svg>`;
 const CARTE = Object.fromEntries(D.cartes.map(c => [c.id, c]));
 const MONDE = Object.fromEntries(D.mondes.map(m => [m.id, m]));
-const COUL = {terminal:"green", git:"orange", github:"violet", vscode:"blue", linux:"green", web:"orange", typescript:"blue", react:"violet", php:"violet", python:"blue", sql:"violet", ia:"green", azure:"blue", data:"green", powerbi:"orange", bureautique:"green", powershell:"blue", r:"blue", cyber:"orange", wordpress:"violet", arduino:"green"};
+const COUL = {terminal:"green", git:"orange", github:"violet", vscode:"blue", linux:"green", web:"orange", typescript:"blue", react:"violet", php:"violet", python:"blue", sql:"violet", ia:"green", azure:"blue", data:"green", powerbi:"orange", bureautique:"green", powershell:"blue", r:"blue", cyber:"orange", wordpress:"violet", arduino:"green", nodejs:"green", nextjs:"blue", supabase:"green", reactnative:"violet", rust:"orange"};
 /* La couleur d'un monde vient de COUL : une seule table, pour les tuiles, les bandeaux et les cartes */
 const fondMonde = id => { const c = COUL[id] || "violet"; return `background:var(--${c});box-shadow:0 5px 0 var(--${c}-d)`; };
 /* Les mondes où l'on écrit du code dans un fichier, et non une commande dans le terminal */
-const MONDES_CODE = ["web","typescript","react","php","python","sql","ia","data","powerbi","bureautique","r","wordpress","arduino"];
+const MONDES_CODE = ["web","typescript","react","php","python","sql","ia","data","powerbi","bureautique","r","wordpress","arduino","nodejs","nextjs","supabase","reactnative","rust"];
 /* Le niveau d'une étape : troisième élément de [nom, [cartes], niveau] dans donnees.js */
 const NIVEAU = {1:"Découvrir", 2:"Pratiquer", 3:"Maîtriser"};
 const badgeNiveau = n => `<span class="niv niv${n || 1}">Niveau ${n || 1} · ${NIVEAU[n || 1]}</span>`;
